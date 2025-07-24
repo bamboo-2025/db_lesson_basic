@@ -1,16 +1,13 @@
 Q1
 CREATE TABLE `departments`(
-department_id INT unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(20) NOT NULL,
-created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  department_id INT unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(20) NOT NULL,
+  created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 Q2
 ●追加
-ALTER TABLE people
-ADD department_id INT unsigned NULL;
-●場所の変更
 ALTER TABLE people
 MODIFY COLUMN department_id INT(10) UNSIGNED NULL AFTER email;
 
@@ -122,10 +119,16 @@ ORDER BY age DESC;
 8 rows in set (0.001 sec)
 
 Q6
-peopleテーブルから作成日時順で、営業部署に所属している人物の、
-名前とメールアドレスと年齢を取得しています。
+peopleテーブルから、「営業部」に所属しているレコードの、
+「名前」と「メールアドレス」と「年齢」という３つのカラムを作成日時順で取得しています。
 
 Q7
+〇OR
+SELECT name FROM people WHERE (40 <= age AND  age < 50 AND gender = 1)
+OR
+(20 <=age AND age < 30 AND gender = 2);
+
+〇UNION
 SELECT name FROM people WHERE 40 <= age AND  age < 50 AND gender = 1
 UNION
 SELECT name FROM people WHERE 20 <=age AND age < 30 AND gender = 2;
@@ -155,7 +158,7 @@ MariaDB [db_lesson]> SELECT * FROM people WHERE department_id = 1 ORDER BY age A
 4 rows in set (0.001 sec)
 
 Q9
-SELECT AVG(age) AS average_age FROM people GROUP BY gender =2 AND  department_id = 2;
+SELECT AVG(age) AS average_age FROM people WHERE gender =2 AND department_id = 2;
 
 +-------------+
 | average_age |
@@ -219,8 +222,6 @@ WHERE r.person_id IS NULL;
 | 松本涼   |
 +----------+
 5 rows in set (0.001 sec)
-
-？日報内容を入れてたはずの人がどこかで結合して消えています。
 
 
 
